@@ -15,6 +15,9 @@ from xml.dom import minidom
 import codecs
 import base64
 
+image_normal = "miku-a.png"
+image_wink = "miku-b.png"
+
 glade_xml = """
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.22.1 -->
@@ -158,7 +161,7 @@ class Miku:
         }
         self.wTree.connect_signals(dic)
         self.inFocus = False
-        self.image = cairo.ImageSurface.create_from_png(os.path.dirname(os.path.abspath(__file__))+"/miku-a.png")
+        self.image = cairo.ImageSurface.create_from_png(os.path.dirname(os.path.abspath(__file__))+"/" + image_normal)
         self.icon = 0
         self.timeout = GLib.timeout_add_seconds(int(self.timeout_interval),self.timeout_callback,self)
         xpos = conf.GetOption("x_pos")
@@ -191,9 +194,9 @@ class Miku:
     def _changeIcon(self):
         self.icon = random.randint(0,15)
         if self.icon == 0:
-            self.image = cairo.ImageSurface.create_from_png(os.path.dirname(os.path.abspath(__file__))+"/miku-b.png")
+            self.image = cairo.ImageSurface.create_from_png(os.path.dirname(os.path.abspath(__file__))+"/" + image_wink)
         else:
-            self.image = cairo.ImageSurface.create_from_png(os.path.dirname(os.path.abspath(__file__))+"/miku-a.png")
+            self.image = cairo.ImageSurface.create_from_png(os.path.dirname(os.path.abspath(__file__))+"/" + image_normal)
 
     def timeout_callback(self,event):
         # print ("timeout_callback")
