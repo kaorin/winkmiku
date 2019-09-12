@@ -160,6 +160,7 @@ class Miku:
             "on_WinkMiku_draw" : self.on_WinkMiku_draw
         }
         self.wTree.connect_signals(dic)
+        # シグナルの処理
         self.inFocus = False
         self.image = cairo.ImageSurface.create_from_png(os.path.dirname(os.path.abspath(__file__))+"/" + image_normal)
         self.icon = 0
@@ -177,6 +178,9 @@ class Miku:
 
     def on_miku_button_press_event(self,widget,event):
         print ("on_miku_button_press_event")
+        if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 1:
+            #左クリック
+            self.mainWindow.begin_move_drag(event.button, event.x_root, event.y_root, event.time)
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
             #右クリック
             self.context_menu.popup(None, None, None,None, event.button, event.time)
@@ -221,7 +225,7 @@ class Miku:
         """
             cr is cairo.Context
         """
-        print ("on_WinkMiku_draw")
+        # print ("on_WinkMiku_draw")
         cr.set_source_rgba(1.0, 1.0, 1.0, 0.0)
         cr.set_operator(cairo.OPERATOR_SOURCE)
         cr.set_source_surface(self.image, 0, 0)
